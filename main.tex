@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{uganda\_gwas}
+\author{Tommy Carstensen}
+\date{December 2014}
+
+\begin{document}
+
+\maketitle
+
+\section{Sample Collection, Library Preparation and DNA Sequencing}
+Blood samples were collected. Sequencing of 5000 samples was carried out on Illumina HiSeq 2000 machines to a an average depth of coverage of 4x. 14 samples were excluded during QC prior to pre-processing of the sequencing reads.
+%APP5293638
+%APP5292945
+%APP5340012
+%APP5340572
+%APP5340400
+%APP5340834
+%APP5340801
+%APP5340217
+%APP5341239
+%APP5341735
+%APP5341575
+%APP5341180
+%APP5341162
+%APP5341189
+
+\section{Pre-Processing of Reads}
+The reads were aligned to build 37 of the human reference sequence with decoys (hs37d5) using BWA version ?.?. Reads with an inferior mapping quality are ignored (--min_mapping_quality_score 20) during variant calling. To improve the accuracy of downstream processing steps we realigned around INDELs using GATK RealignerTargetCreater and GATK IndelRealigner.
+%figure with mapped reads, coverage, heterozygosity, etc.?
+
+\section{Variant Calling}
+Variant calling was performed with GATK HaplotypeCaller 3.2. Each sample was downsampled to a maximum coverage of 250 during variant calling (--downsampling_type BY_SAMPLE --downsample_to_coverage 250). Reads with an inferior mapping quality were ignored (--min_mapping_quality_score 20). The minimum base quality required to consider a base for calling was set to 10 (--min_base_quality_score 10). No more than 6 alternate alleles were emitted at each site (--max_alternate_alleles 6). In an attempt to provide better input for the subsequent variant filtering step variants of inferior quality were not called  (--standard_min_confidence_threshold_for_calling 10 and --standard_min_confidence_threshold_for_emitting 10).
+
+\section{Variant Filtering}
+
+\section{Refinement}
+Genotype probablities were refined with BEAGLE4 (rxxx?) in the absence of a reference panel. After refinement only biallelic SNPs matching those in the Illumina Omni2.5 dataset after quality control were brought forward for analysis; i.e. xxx,xxx biallelic SNPs. After refinement samples with high heterozygosity were removed.
+
+\end{document}
